@@ -3,13 +3,13 @@ import GoogleProvider from "next-auth/providers/google";
 import bcrypt from "bcrypt";
 import prisma from "@repo/db/client";
 import { NextAuthOptions } from "next-auth";
-
+console.log(process.env.NEXTAUTH_SECRET, "SECRET");
 export const authOptions: NextAuthOptions = {
   // Configure one or more authentication providers
   providers: [
     CredentialsProvider({
       credentials: {
-        phone: {
+        email: {
           label: "Email",
           type: "email",
           placeholder: "john@example.com",
@@ -28,15 +28,25 @@ export const authOptions: NextAuthOptions = {
           return user;
         }
 
-        const newUser = await prisma.user.create({
-          // @ts-ignore
-          data: {
-            email: credentials.email as string,
-            password: bcrypt.hashSync(credentials.password, 10),
-          },
-        });
+        console.log(credentials, "credentials");
 
-        return newUser;
+        try {
+            const newUser = await prisma.user.create({
+              // @ts-ignore
+              data: {
+                email: credentials.email as string,
+                password: bcrypt.hashSync(credentials.password, 10),
+              },
+            });
+    
+            return newUser;
+
+        }
+
+        catch (error) {
+          console.log(error);
+        }
+
       },
     }),
   ],

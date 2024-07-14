@@ -15,11 +15,11 @@ datasource db {
 
 model User {
   id           String        @id @default(uuid())
-  name         String
+  name         String?
   password     String
   email        String        @unique
   account_type AccountType   @default(PERSONAL)
-  balance      Decimal
+  balance      Decimal       @default(0.0)
   transactions Transaction[] @relation("UserTransactions")
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
