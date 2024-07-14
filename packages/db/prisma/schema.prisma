@@ -14,7 +14,47 @@ datasource db {
 }
 
 model User {
-  id   Int    @unique @default(autoincrement())
-  name String
-  age Int
+  id           String        @id @default(uuid())
+  name         String
+  password     String
+  email        String        @unique
+  account_type AccountType   @default(PERSONAL)
+  balance      Decimal
+  transactions Transaction[] @relation("UserTransactions")
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  payees       Transaction[] @relation("PayeeTransactions")
+
+  @@index([id, name])
+}
+
+model Transaction {
+  id               String            @id @default(uuid())
+  transaction_type TransactionType   @default(PERSONAL)
+  status           TransactionStatus @default(PENDING)
+  userId           String
+  payeeId          String
+  user             User              @relation("UserTransactions", fields: [userId], references: [id])
+  payee            User              @relation("PayeeTransactions", fields: [payeeId], references: [id])
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+
+  @@index([id, userId])
+  @@index([id, payeeId])
+}
+
+enum TransactionStatus {
+  PENDING
+  COMPLETED
+  ERROR
+}
+
+enum TransactionType {
+  PERSONAL
+  BUSINESS
+}
+
+enum AccountType {
+  PERSONAL
+  BUSINESS
 }
