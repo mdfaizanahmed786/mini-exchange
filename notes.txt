@@ -1,0 +1,15 @@
+1. Installed turbo repo with tailwind template:
+npx create-turbo@latest -e with-tailwind
+2. added db folder into the packages folder and npm init --y and tsconfig.json by extending the base.json in the packages folder
+3. installed prisma using npx prisma init and added the schema.prisma file and added user model into it.
+4. created index.ts file and exported everything in the prisma client @prisma/client.
+5. In package.json added a name for it: @repo/db and added a field in exports folder "./client":"./index.ts"
+6. Ran prisma migrate dev --name init and generate prisma client
+7. In the web folder imported prisma client using  @repo/db/client.
+
+
+Ran docker command to start a postgres container:
+docker run command to start the container
+docker run -e POSTGRES_PASSWORD=mysecretpassword -d -p 5432:5432 postgres
+docker exec -it <container_id> /bin/bash
+psql -U postgres
