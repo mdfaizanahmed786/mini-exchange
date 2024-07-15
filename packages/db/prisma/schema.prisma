@@ -33,6 +33,7 @@ model Transaction {
   transaction_type TransactionType   @default(PERSONAL)
   status           TransactionStatus @default(PENDING)
   userId           String
+  token            String
   payeeId          String
   user             User              @relation("UserTransactions", fields: [userId], references: [id])
   payee            User              @relation("PayeeTransactions", fields: [payeeId], references: [id])
