@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import RecoilProvider from "./components/RecoilProvider";
 import NextAuthSessionWrapper from "./components/NextAuthSessionWrapper";
+import AppBar from "./components/AppBar";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -20,6 +21,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <NextAuthSessionWrapper>
+      <AppBar/> 
           <RecoilProvider>{children}</RecoilProvider>
         </NextAuthSessionWrapper>
       </body>
