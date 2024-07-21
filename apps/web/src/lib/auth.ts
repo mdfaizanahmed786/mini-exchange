@@ -60,18 +60,15 @@ export const authOptions: NextAuthOptions = {
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
-        token.email = user.email;
       }
       return token;
     },
-
-    async session({ session, user }) {
-       if (user) {
-        session.user = user;
-        }
+  
+   async session({session, token}){
+      session.user.id=token.id;
       return session;
-    },
-  },
-};
+   }
+  }
+}
 
 export default authOptions;

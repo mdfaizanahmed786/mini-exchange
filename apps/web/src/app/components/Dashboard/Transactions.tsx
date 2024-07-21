@@ -1,10 +1,11 @@
 "use client"
-import React, { useState } from 'react';
+import React, { useState, useTransition } from 'react';
+import { addMoney } from '../../actions/addMoney';
 
 const DashboardContainer = () => {
-  const [amount, setAmount] = useState('');
+  const [amount, setAmount] = useState(0);
   const [selectedBank, setSelectedBank] = useState('');
-
+ const [isPending, startTransition]=useTransition()
   // Sample data for balances and transactions (replace with actual data from backend)
   const balances = {
     unlock: 5000,
@@ -18,9 +19,14 @@ const DashboardContainer = () => {
     { id: 3, amount: 200, status: 'failure', date: '2024-07-18' },
   ];
 
-  const handleAddMoney = () => {
+  const handleAddMoney = async () => {
     // Add your logic here to handle the money addition
-    console.log('Adding money:', amount, 'from bank:', selectedBank);
+    startTransition(async ()=>{
+        const transaction = await addMoney(amount, selectedBank);
+        console.log(transaction)
+
+    })
+   
   };
 
   return (
@@ -67,7 +73,7 @@ const DashboardContainer = () => {
               id="amount"
               className="w-full p-2 border rounded"
               value={amount}
-              onChange={(e) => setAmount(e.target.value)}
+              onChange={(e) => setAmount(Number(e.target.value))}
               placeholder="Enter amount"
             />
           </div>
@@ -92,7 +98,7 @@ const DashboardContainer = () => {
             className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition-colors"
             onClick={handleAddMoney}
           >
-            Add Money
+            {isPending ? 'Adding Money...' : 'Add Money'}
           </button>
         </div>
       </div>

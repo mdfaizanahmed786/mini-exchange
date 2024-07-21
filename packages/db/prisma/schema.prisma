@@ -19,7 +19,7 @@ model User {
   password     String
   email        String        @unique
   account_type AccountType   @default(PERSONAL)
-  balance      Decimal       @default(0.0)
+  balance      Int       @default(0)
   transactions Transaction[] @relation("UserTransactions")
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
@@ -34,11 +34,12 @@ model Transaction {
   status           TransactionStatus @default(PENDING)
   userId           String
   token            String
-  payeeId          String
+  payeeId          String?
   user             User              @relation("UserTransactions", fields: [userId], references: [id])
-  payee            User              @relation("PayeeTransactions", fields: [payeeId], references: [id])
+  payee            User?             @relation("PayeeTransactions", fields: [payeeId], references: [id])
   createdAt        DateTime          @default(now())
   updatedAt        DateTime          @updatedAt
+  amount            Int             
 
   @@index([id, userId])
   @@index([id, payeeId])
