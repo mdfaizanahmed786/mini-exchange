@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev":"esbuild index.ts --bundle --sourcemap --outdir=dist --watch"
+    "build": "npx esbuild ./index.ts --bundle --platform=node --outfile=dist/index.js"
   },
   "keywords": [],
   "author": "",
