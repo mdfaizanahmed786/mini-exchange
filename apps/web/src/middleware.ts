@@ -18,7 +18,7 @@ export async function middleware(request: NextRequest) {
       return NextResponse.redirect(new URL("/dashboard/home", request.url));
     }
 
-    if (!token && (url.pathname === "/dashboard" || url.pathname === "/")) {
+    if (!token && (url.pathname.includes("dashboard") || url.pathname === "/")) {
       return NextResponse.redirect(new URL("/api/auth/signin", request.url));
     }
   } catch (error) {
@@ -30,5 +30,5 @@ export async function middleware(request: NextRequest) {
 
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: ["/dashboard", "/", "/api/auth/signin"],
+  matcher: ["/dashboard/:path*", "/", "/api/auth/signin"],
 };
