@@ -9,14 +9,18 @@ export async function middleware(request: NextRequest) {
   try {
     const token = await getToken({ req: request });
 
-    if (token && (url.pathname === "/api/auth/signin" || url.pathname.split("").length === 1)) {
-      return NextResponse.redirect(new URL("/dashboard", request.url));
+    if (
+      token &&
+      (url.pathname === "/api/auth/signin" ||
+        url.pathname.split("").length === 1 ||
+        url.pathname === "/dashboard")
+    ) {
+      return NextResponse.redirect(new URL("/dashboard/home", request.url));
     }
 
     if (!token && (url.pathname === "/dashboard" || url.pathname === "/")) {
       return NextResponse.redirect(new URL("/api/auth/signin", request.url));
     }
-
   } catch (error) {
     console.log(error, "Error");
   }

@@ -13,8 +13,9 @@ export const authOptions: NextAuthOptions = {
           label: "Email",
           type: "email",
           placeholder: "john@example.com",
+          required: true,
         },
-        password: { label: "Password", type: "password" },
+        password: { label: "Password", type: "password", required: true, },
       },
       //   @ts-ignore
       async authorize(credentials: any) {

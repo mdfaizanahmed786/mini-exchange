@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React from 'react';
 import { FaHome, FaExchangeAlt, FaMoneyCheckAlt } from 'react-icons/fa';
 
@@ -8,18 +9,18 @@ function Sidebar () {
         <h1 className="text-3xl font-bold">My App</h1>
       </div>
       <div className="flex flex-col flex-grow">
-        <a href="#home" className="flex items-center p-4 hover:bg-gray-700">
+        <Link href={'/dashboard/home'} className="flex items-center p-4 hover:bg-gray-700">
           <FaHome className="mr-4" />
           Home
-        </a>
-        <a href="#transfer" className="flex items-center p-4 hover:bg-gray-700">
+        </Link>
+        <Link  href={'/dashboard/transfer'} className="flex items-center p-4 hover:bg-gray-700">
           <FaExchangeAlt className="mr-4" />
           Transfer
-        </a>
-        <a href="#transactions" className="flex items-center p-4 hover:bg-gray-700">
+        </Link>
+        <Link href={'/dashboard/peer-to-peer'} className="flex items-center p-4 hover:bg-gray-700">
           <FaMoneyCheckAlt className="mr-4" />
-          Transactions
-        </a>
+          Peer to Peer
+        </Link>
       </div>
     </div>
   );
