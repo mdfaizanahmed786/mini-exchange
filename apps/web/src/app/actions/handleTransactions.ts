@@ -2,6 +2,8 @@
 import prisma from "@repo/db/client";
 import { getServerSession } from "next-auth";
 import authOptions from "../../lib/auth";
+import { revalidatePath } from "next/cache";
+
 
 export async function addMoney(amount: number, provider:string){
 
@@ -20,6 +22,8 @@ export async function addMoney(amount: number, provider:string){
             }
         })
 
+        revalidatePath('/dashboard/home');
+
         return {
              success: true,
              data: {
@@ -36,3 +40,4 @@ export async function addMoney(amount: number, provider:string){
     
     
 }
+
